@@ -1,0 +1,26 @@
+{
+  "name": "mvvwb",
+  "version": "1.0.0",
+  "description": "Gallery template for the mvvwb.at site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Florian Preinfalk",
+  "license": "ISC",
+  "dependencies": {
+    "photoswipe": "^4.1.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.6.4",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "merge-stream": "^2.0.0",
+    "minimist": "^1.2.0"
+  }
+}
