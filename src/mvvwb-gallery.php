@@ -36,11 +36,24 @@ if (!class_exists('MVVWBTemplate')) {
             $this->addFilter('foogallery_gallery_templates_files', 'registerFile');
     
             // Specific filters
-            $this->addFilter('foogallery_preview_arguments', 'previewArguments', false);
-            $this->addFilter('foogallery_calculate_thumbnail_dimensions', 'calculateThumbnailDimensions', false);
-            $this->addFilter('foogallery_template_thumbnail_dimensions', 'templateThumbnailDimensions', false);
-            $this->addFilter('foogallery_gallery_template_arguments', 'galleryTemplateArguments', false);
-            $this->addFilter('foogallery_located_template', 'locatedTemplate', false);
+            $this->addFilter('foogallery_preview_arguments', 'previewArguments', 2, false);
+            
+            $this->addFilter(
+                'foogallery_calculate_thumbnail_dimensions',
+                'calculateThumbnailDimensions', 2, false
+            );
+            
+            $this->addFilter(
+                'foogallery_template_thumbnail_dimensions',
+                'templateThumbnailDimensions', 2, false
+            );
+
+            $this->addFilter(
+                'foogallery_gallery_template_arguments',
+                'galleryTemplateArguments', 1, false
+            );
+            
+            $this->addFilter('foogallery_located_template', 'locatedTemplate', 1, false);
         }
     
         /**
@@ -185,11 +198,11 @@ if (!class_exists('MVVWBTemplate')) {
          * @param string $function the method which should be called
          * @param bool $global if global is turned of, a gallery template specific id is appended
          */
-        private function addFilter($id, $function, $global = true) {
+        private function addFilter($id, $function, $numArgs = 1, $global = true) {
             if ($global)
-                add_filter($id, [ $this, $function ]);
+                add_filter($id, [ $this, $function ], 10, $numArgs);
             else
-                add_filter("$id-mvvwb-gallery", [ $this, $function ]);
+                add_filter("$id-mvvwb-gallery", [ $this, $function ], 10, $numArgs);
         }
     }    
 }
