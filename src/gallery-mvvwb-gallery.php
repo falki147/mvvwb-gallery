@@ -1,6 +1,17 @@
 <?php
+/**
+ * Renders the gallery to HTML to the output buffer
+ */
 
+/**
+ * Wraps the render function in a class
+ */
 class MVVWBTemplateGallery {
+    /**
+     * Renders the HTML to the output buffer
+     *
+     * @param object[] $attachments the attached images to the gallery
+     */
     public static function buildContent($attachments) {
         $args = foogallery_gallery_template_arguments();
 
@@ -47,6 +58,13 @@ class MVVWBTemplateGallery {
         echo '</div>';
     }
 
+    /**
+     * Gets the URL from an attachment
+     * 
+     * @param object $attachment the attachment object
+     * @param string $args the type of the attachment URL
+     * @return string either the URL or an empty string
+     */
     public static function getURL($attachment, $args) {
         switch ($args) {
         case 'page':
@@ -64,6 +82,7 @@ class MVVWBTemplateGallery {
     }
 }
 
+/** Render the gallery */
 MVVWBTemplateGallery::buildContent(
     foogallery_current_gallery_attachments_for_rendering()
 );

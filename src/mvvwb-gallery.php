@@ -1,5 +1,10 @@
 <?php
 /**
+ * Entry point of the plugin
+ *
+ * It defines the gallery template class and registers it
+ */
+/**
  * Plugin Name: MVVWB-Gallery
  * Description: Gallery Template for Foogallery for the MVVWB Site
  * Version: 1.0.0
@@ -7,14 +12,24 @@
  * Author URI: http://www.preinfalk.co.at
  */
 
-if (!defined('MVVWB_GALLERY_TEMPLATE_BASE'))
+if (!defined('MVVWB_GALLERY_TEMPLATE_BASE')) {
+    /** Base path of the plugin */
     define('MVVWB_GALLERY_TEMPLATE_BASE', plugin_dir_url(__FILE__));
+}
 
-if (!defined('MVVWB_GALLERY_TEMPLATE_VERSION'))
+if (!defined('MVVWB_GALLERY_TEMPLATE_VERSION')) {
+    /** Version of this plugin */
     define('MVVWB_GALLERY_TEMPLATE_VERSION', '1.0.0');
+}
 
 if (!class_exists('MVVWBTemplate')) {
+    /**
+     * Main class registering to all relevant filters
+     */
     class MVVWBTemplate {
+        /**
+         * Register methods
+         */
         function __construct() {
             // Global filters
             $this->addFilter('foogallery_gallery_templates', 'addTemplate');
@@ -28,11 +43,23 @@ if (!class_exists('MVVWBTemplate')) {
             $this->addFilter('foogallery_located_template', 'locatedTemplate', false);
         }
     
+        /**
+         * Adds current file to extension list
+         *
+         * @param string[] $extensions list of extensions
+         * @return string[] list of extensions with current file appended
+         */
         public function registerFile($extensions) {
             $extensions[] = __FILE__;
             return $extensions;
         }
     
+        /**
+         * Adds the current gallery template info
+         *
+         * @param array[] $galleryTemplates list of gallery templates
+         * @return array[] list of gallery templates with this template appended
+         */
         public function addTemplate($galleryTemplates) {
             $galleryTemplates[] = [
                 'slug'            => 'mvvwb-gallery',
@@ -65,11 +92,26 @@ if (!class_exists('MVVWBTemplate')) {
             return $galleryTemplates;
         }
     
+        /**
+         * Build preview arguments
+         *
+         * @param array $args arguments
+         * @param array $postData $_POST data
+         * @return array modified arguments array
+         */
         function previewArguments($args, $postData) {
             $args['thumbnail_dimensions'] = $postData[FOOGALLERY_META_SETTINGS]['default_thumbnail_dimensions'];
             return $args;
         }
     
+        /**
+         * Retrieves the thumbnail dimensions depending on the arguments
+         * 
+         * @param array $dimensions array containing the result from the previous called filter
+         * It can be ignored
+         * @param array $arguments arguments to derive the dimensions from
+         * @return array|null either the dimensions or null
+         */
         function calculateThumbnailDimensions($dimensions, $arguments) {
             if (array_key_exists('thumbnail_dimensions', $arguments))
                 return [
@@ -81,6 +123,16 @@ if (!class_exists('MVVWBTemplate')) {
             return null;
         }
     
+        /**
+         * Retrieves the dimensions from the settings
+         *
+         * This is called when calculateThumbnailDimensions fails to calculate dimensions
+         *
+         * @param array $dimensions array containing the result from the previous called filter
+         * It can be ignored
+         * @param \FooGallery $foogallery the current gallery instance
+         * @return array the thumbnail dimensions dimensions
+         */
         function templateThumbnailDimensions($dimensions, $foogallery) {
             $dimensions = $foogallery->get_meta('default_thumbnail_dimensions', [
                 'width' => get_option('thumbnail_size_w'),
@@ -91,6 +143,13 @@ if (!class_exists('MVVWBTemplate')) {
             return $dimensions;
         }
     
+        /**
+         * Build arguments for rendering template
+         *
+         * @param array $args array containing the result from the previous called filter
+         * It can be ignored
+         * @return array the arguments
+         */
         function galleryTemplateArguments($args) {
             $args = foogallery_gallery_template_setting('thumbnail_dimensions', []);
             $args['crop'] = '1';
@@ -98,6 +157,11 @@ if (!class_exists('MVVWBTemplate')) {
             return $args;
         }
     
+        /**
+         * Hook called after the template is located
+         *
+         * This is called before the template is loaded
+         */
         public function locatedTemplate() {
             wp_enqueue_script(
                 'mvvwb-gallery',
@@ -114,6 +178,13 @@ if (!class_exists('MVVWBTemplate')) {
             );
         }
     
+        /**
+         * Helper function for adding filters/actions
+         *
+         * @param string $id the id of the filter
+         * @param string $function the method which should be called
+         * @param bool $global if global is turned of, a gallery template specific id is appended
+         */
         private function addFilter($id, $function, $global = true) {
             if ($global)
                 add_filter($id, [ $this, $function ]);
@@ -123,4 +194,5 @@ if (!class_exists('MVVWBTemplate')) {
     }    
 }
 
+/** Instantiate class */
 new MVVWBTemplate();
