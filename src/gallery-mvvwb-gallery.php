@@ -26,7 +26,7 @@ if (!class_exists('MVVWBTemplateGallery')) {
                 if ($url !== '')
                     echo '<a href="', esc_url($url), '">';
                 
-                $alt = $attachments->alt;
+                $alt = $attachment->alt;
 
                 if ($alt === '')
                     $alt = "Bild $ind";
