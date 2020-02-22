@@ -4,7 +4,9 @@ const concat = require("gulp-concat");
 const merge = require("merge-stream");
 const minifyCSS = require("gulp-csso");
 const minimist = require('minimist');
+const package = require("./package.json");
 const postcss = require('gulp-postcss');
+const replace = require("gulp-replace");
 const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const uglify = require("gulp-uglify");
@@ -82,6 +84,7 @@ function js() {
 
 function php() {
     return src(phpSources)
+        .pipe(replace("{{version}}", package.version))
         .pipe(dest(destDir));
 }
 

@@ -7,7 +7,7 @@
 /**
  * Plugin Name: MVVWB-Gallery
  * Description: Gallery Template for Foogallery for the MVVWB Site
- * Version: 1.0.0
+ * Version: {{version}}
  * Author: Florian Preinfalk
  * Author URI: http://www.preinfalk.co.at
  */
@@ -19,7 +19,7 @@ if (!defined('MVVWB_GALLERY_TEMPLATE_BASE')) {
 
 if (!defined('MVVWB_GALLERY_TEMPLATE_VERSION')) {
     /** Version of this plugin */
-    define('MVVWB_GALLERY_TEMPLATE_VERSION', '1.0.0');
+    define('MVVWB_GALLERY_TEMPLATE_VERSION', '{{version}}');
 }
 
 if (!class_exists('MVVWBTemplate')) {
