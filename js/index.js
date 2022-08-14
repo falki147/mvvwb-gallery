@@ -30,7 +30,9 @@
         var links = galleries[i].getElementsByTagName("a");
 
         for (j = 0; j < links.length; ++j) {
-            var index = items.findIndex(function (item) { return item.src == links[j].href; });
+            var index = items.findIndex(function (item) {
+                return decodeURI(item.src) == decodeURI(links[j].href);
+            });
             
             if (index < 0)
                 continue;
