@@ -1,6 +1,6 @@
 {
   "name": "mvvwb",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Gallery template for the mvvwb.at site",
   "main": "index.js",
   "scripts": {
