@@ -23,8 +23,14 @@ if (!class_exists('MVVWBTemplateGallery')) {
             foreach ($attachments as $attachment) {
                 $url = static::getURL($attachment, $args);
 
-                if ($url !== '')
-                    echo '<a href="', esc_url($url), '">';
+                if ($url !== '') {
+                    echo '<a';
+                    echo ' href="', esc_url($url), '" ';
+                    echo ' data-pswp-width="', esc_attr($attachment->width), '"';
+                    echo ' data-pswp-height="', esc_attr($attachment->height), '"';
+                    echo ' data-cropped="true"';
+                    echo '>';
+                }
                 
                 $alt = $attachment->alt;
 
@@ -41,12 +47,6 @@ if (!class_exists('MVVWBTemplateGallery')) {
 
                 if (!empty($args['width']) && !empty($args['height']))
                     echo " style=\"width: {$args['width']}px; height: {$args['height']}px\"";
-
-                if ($url === $attachment->url) {
-                    echo ' data-src="', esc_attr($attachment->url), '"';
-                    echo ' data-width="', esc_attr($attachment->width), '"';
-                    echo ' data-height="', esc_attr($attachment->height), '"';
-                }
 
                 echo '>';
 
