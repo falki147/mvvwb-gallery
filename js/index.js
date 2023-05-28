@@ -5,7 +5,8 @@ for (const gallery of document.querySelectorAll('.gallery')) {
   const lightbox = new PhotoSwipeLightbox({
     gallery,
     children: 'a',
-    pswpModule: () => import('photoswipe')
+    pswpModule: () => import('photoswipe'),
+    loop: false
   });
   lightbox.init();
 }
